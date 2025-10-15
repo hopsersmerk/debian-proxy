@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  proxy:
+    build: .
+    container_name: proxy-server
+    restart: unless-stopped
+    ports:
+      - "9666:9666"
+    volumes:
+      - ./squid.conf:/etc/squid/squid.conf
+      - ./passwd:/etc/squid/passwd
+      - ./logs:/var/log/squid
