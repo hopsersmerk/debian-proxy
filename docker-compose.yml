@@ -6,4 +6,4 @@ services:
     container_name: proxy-server
     restart: unless-stopped
     ports:
-      - "9666:9666"
+      - "443:443"
