@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
   proxy:
     build: .
     container_name: proxy-server
     restart: unless-stopped
     ports:
-      - "7443:7443"
+      - "9666:9666"
