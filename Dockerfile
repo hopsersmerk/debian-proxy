@@ -1,24 +1,17 @@
 # Imagen base estable
 FROM debian:bookworm-slim
 
-# Instalar dependencias
+# Paquetes
 RUN apt update && \
-    apt install -y squid apache2-utils curl nano && \
+    apt install -y squid apache2-utils ca-certificates curl nano && \
     rm -rf /var/lib/apt/lists/*
 
-# Crear carpeta de logs
-RUN mkdir -p /var/log/squid && chmod -R 755 /var/log/squid
+# Copiamos el conf al build (para que exista incluso si el bind falla)
+COPY squid.conf /etc/squid/squid.conf
 
-# Crear usuario para autenticación (manual después)
-# RUN htpasswd -c /etc/squid/passwd proxyuser
+# Preparamos directorios y permisos
+RUN mkdir -p /var/spool/squid /var/log/squid && \
+    chown -R proxy:proxy /var/spool/squid /var/log/squid
 
-# Exponer puerto 9666
-EXPOSE 9666
-
-# Prevenir error xcalloc: crea spool vacío y desactiva cache por defecto
-RUN mkdir -p /var/spool/squid && \
-    chown -R proxy:proxy /var/spool/squid && \
-    echo "cache_dir null /tmp" > /etc/squid/conf.d/disable-cache.conf
-
-# Comando de inicio
-CMD ["squid", "-N", "-d", "1"]
+# Línea clave: forzamos a usar este conf SIEMPRE
+CMD ["bash","-lc","exec squid -f /etc/squid/squid.conf -N -d 1"]
