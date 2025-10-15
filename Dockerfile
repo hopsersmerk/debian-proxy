@@ -4,6 +4,6 @@ RUN apt update && apt install -y tinyproxy apache2-utils && rm -rf /var/lib/apt/
 
 COPY tinyproxy.conf /etc/tinyproxy/tinyproxy.conf
 
-EXPOSE 9666
+EXPOSE 3003
 
 CMD ["tinyproxy", "-d", "-c", "/etc/tinyproxy/tinyproxy.conf"]
