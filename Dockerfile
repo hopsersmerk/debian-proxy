@@ -15,5 +15,10 @@ RUN mkdir -p /var/log/squid && chmod -R 755 /var/log/squid
 # Exponer puerto 9666
 EXPOSE 9666
 
+# Prevenir error xcalloc: crea spool vacío y desactiva cache por defecto
+RUN mkdir -p /var/spool/squid && \
+    chown -R proxy:proxy /var/spool/squid && \
+    echo "cache_dir null /tmp" > /etc/squid/conf.d/disable-cache.conf
+
 # Comando de inicio
 CMD ["squid", "-N", "-d", "1"]
