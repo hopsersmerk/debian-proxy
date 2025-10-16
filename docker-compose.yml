@@ -1,15 +1,16 @@
-version: "3.8"
-
 services:
   dante:
     image: debian:bookworm-slim
     container_name: dante-socks5
     restart: unless-stopped
+    command: >
+      bash -c "apt-get update -qq &&
+               apt-get install -y -qq dante-server &&
+               danted -f /etc/danted.conf -d 1"
     volumes:
       - ./danted.conf:/etc/danted.conf
     expose:
       - "1080"
-    command: ["danted", "-f", "/etc/danted.conf", "-d", "1"]
     networks:
       - proxy-net
 
