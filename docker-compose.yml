@@ -4,4 +4,5 @@ services:
     container_name: socks5-proxy
     restart: unless-stopped
     ports:
-      - "443:443"
+      - "443:443/tcp"
+      - "443:443/udp"
