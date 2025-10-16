@@ -8,4 +8,5 @@ COPY danted.conf /etc/danted.conf
 
 EXPOSE 443/tcp 443/udp
 
-CMD sleep 3 && danted -f /etc/danted.conf -D
+# Iniciar con un pequeño delay y modo debug 1 (para ver errores)
+CMD sleep 2 && danted -f /etc/danted.conf -D -d 1
