@@ -1,7 +1,7 @@
 services:
   proxy:
     build: .
-    container_name: proxy-server
+    container_name: socks5-proxy
     restart: unless-stopped
     ports:
       - "443:443"
